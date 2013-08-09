@@ -1,0 +1,6 @@
+{
+  "name": "boilerplate-h5bp",
+  "dependencies": {
+    "h5bp": "h5bp/html5-boilerplate"
+  }
+}

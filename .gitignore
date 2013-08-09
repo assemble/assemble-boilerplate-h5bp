@@ -12,3 +12,12 @@ logs
 results
 
 npm-debug.log
+node_modules
+
+tmp
+temp
+TODO.md
+vendor
+_gh_pages
+_gh-pages
+*.sublime-*
