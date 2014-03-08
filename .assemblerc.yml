@@ -1,0 +1,14 @@
+# =============================================
+# PROJECT METADATA
+# =============================================
+
+
+dest:              _gh-pages
+assets:            <%= site.dest %>/assets
+
+# Templates
+templates:         src
+pages:             <%= site.templates %>/pages
+includes:          <%= site.templates %>/includes
+layouts:           <%= site.templates %>/layouts
+layout:            default.hbs

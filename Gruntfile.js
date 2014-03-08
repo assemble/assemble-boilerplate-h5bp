@@ -1,7 +1,7 @@
 /*
  * boilerplate-h5bp
- * https://github.com/Jon Schlinkert/boilerplate-h5bp
- * Copyright (c) 2013
+ * https://github.com/assemble/boilerplate-h5bp
+ * Copyright (c) 2014, Jon Schlinkert, Brian Woodward, contributors.
  * Licensed under the MIT license.
  */
 
@@ -12,55 +12,15 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    site: {
-      destination: '_gh-pages',
-      origin: 'vendor/h5bp'
-    },
+    site: grunt.file.readYAML('.assemblerc.yml'),
+    vendor: grunt.file.readJSON('.bowerrc').directory,
+    process: require('./src/sanitize.js'),
 
     // Lint JavaScript
     jshint: {
-      all: ['Gruntfile.js', 'src/helpers/*.js'],
+      all: ['Gruntfile.js', '<%= site.helpers %>/*.js'],
       options: {
         jshintrc: '.jshintrc'
-      }
-    },
-
-    copy: {
-      layout: {
-        options: {
-          processContent: function(content) {
-            return content
-              .replace(/<!-- .*\s*<p>Hello world!.*<\/p>/, "{{> body }}")
-              .replace(/(\].*)(\.md)/g, '$1.html')
-              .replace(/(<title>)(<\/title>)/, '{{#isnt basename "index"}}$1{{titleize basename}}$2{{else}}$1Home$2{{/isnt}}');
-          }
-        },
-        src: ['<%= site.origin %>/index.html'],
-        dest: 'src/layouts/h5bp-layout.hbs'
-      },
-      content: {
-        options: {
-          processContent: function(content) {
-            return content.replace(/(\].*)(\.md)/g, '$1.html');
-          }
-        },
-        files: [{
-            flatten: true,
-            expand: true,
-            cwd: 'vendor/h5bp/',
-            src: ['doc/**'],
-            dest: 'tmp/content/'
-          }
-        ]
-      },
-      essentials: {
-        files: [{
-            expand: true,
-            cwd: 'vendor/h5bp/',
-            src: ['**/*', '!**/index.html', '!**/docs'],
-            dest: '_gh-pages/'
-          }
-        ]
       }
     },
 
@@ -68,10 +28,9 @@ module.exports = function(grunt) {
     assemble: {
       options: {
         flatten: true,
-        engine: 'handlebars',
-        assets: '<%= site.destination %>/assets',
-        layoutdir: 'src/layouts',
-        layout: 'default.hbs'
+        assets: '<%= site.assets %>',
+        layouts: '<%= site.layouts %>',
+        layout: '<%= site.layout %>'
       },
       docs: {
         options: {
@@ -87,29 +46,15 @@ module.exports = function(grunt) {
             misc       : {content: '{{md "tmp/content/misc.md"}}'},
           }
         },
-        files: {'<%= site.destination %>/': ['src/index.hbs'] }
+        files: {'<%= site.dest %>/': ['src/index.hbs'] }
       }
     },
 
     // Prettify test HTML pages from Assemble task.
     prettify: {
-      options: {
-        prettifyrc: '.prettifyrc'
-      },
       all: {
-        files: [{
-            expand: true,
-            cwd: '<%= copy.layout.dest %>',
-            src: ['*.hbs'],
-            dest: '<%= copy.layout.dest %>/',
-            ext: '.hbs'
-          }, {
-            expand: true,
-            cwd: '<%= site.destination %>',
-            src: ['*.html'],
-            dest: '<%= site.destination %>/',
-            ext: '.html'
-          }
+        files: [
+          {expand: true, cwd: '<%= site.dest %>', src: ['*.html'], dest: '<%= site.dest %>/', ext: '.html'}
         ]
       }
     },
@@ -118,9 +63,38 @@ module.exports = function(grunt) {
       // concat and minify scripts
     },
 
+    // Copy H5BP files to new project, using replacement
+    // patterns to convert files into templates.
+    copy: {
+      layout: {
+        options: {
+          processContent: '<%= process.replacements %>'
+        },
+        src: ['<%= site.origin %>/index.html'],
+        dest: '<%= site.layouts %>/h5bp-layout.hbs'
+      },
+      content: {
+        options: {
+          processContent: '<%= process.links %>'
+        },
+        files: [
+          {flatten: true, expand: true, cwd: '<%= vendor %>/h5bp/', src: ['doc/**'], dest: 'tmp/content/'}
+        ]
+      },
+      essentials: {
+        files: [{
+            expand: true,
+            cwd: '<%= vendor %>/h5bp/',
+            src: ['**/*', '!**/index.html', '!**/docs'],
+            dest: '<%= site.dest %>/'
+          }
+        ]
+      }
+    },
+
     // Before generating new files remove files from previous build.
     clean: {
-      tmp: ['tmp/**/*', '_gh-pages/*.html']
+      tmp: ['tmp/**/*', '<%= site.dest %>/*.html']
     }
   });
 
