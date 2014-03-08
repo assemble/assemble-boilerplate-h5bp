@@ -1,7 +1,7 @@
 {
   "name": "boilerplate-h5bp",
-  "description": "Assemble boilerplate for generating a site with H5BP (HTML5 Boilerplate).",
-  "version": "0.1.1",
+  "description": "Boilerplate for generating a site with Assemble.",
+  "version": "0.1.0",
   "homepage": "https://github.com/assemble/boilerplate-h5bp",
   "author": {
     "name": "Jon Schlinkert",
@@ -25,23 +25,28 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "assemble": "~0.4.36",
-    "assemble-less": "~0.7.0",
-    "grunt": "~0.4.3",
+    "assemble": "~0.4.3",
+    "assemble-less": "~0.4.8",
+    "assemble-internal": "~0.2.0",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-connect": "~0.7.1",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-qunit": "~0.4.0",
-    "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-prettify": "~0.3.4"
+    "grunt-contrib-jshint": "~0.6.2",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-prettify": "~0.2.6",
+    "grunt": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-qunit": "~0.2.2",
+    "grunt-contrib-uglify": "~0.2.2"
   },
   "keywords": [
-    "assemble",
-    "assembleboilerplate",
-    "boilerplate",
-    "h5bp",
-    "html 5 boilerplate"
+    "grunt task",
+    "build",
+    "handlebars helper",
+    "underscore mixin",
+    "site generator",
+    "component generator",
+    "blog generator",
+    "handlebars",
+    "templates"
   ]
 }
