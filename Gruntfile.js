@@ -104,6 +104,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-prettify');
+  grunt.loadNpmTasks('grunt-verb');
 
   // Default tasks to be run.
   grunt.registerTask('default', [
