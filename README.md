@@ -6,7 +6,7 @@ To learn more about Assemble visit [assemble.io](http://assemble.io).
 
 ## Getting Started
 
-1. [Download](https://github.com/h5bp/boilerplate-h5bp/archive/master.zip) this project.
+1. [Download](https://github.com/assemble/boilerplate-h5bp/archive/master.zip) this project.
 2. Run `bower install` **or** `git clone https://github.com/h5bp/boilerplate-h5bp.git "vendor"`
 3. Run `npm install`
 
